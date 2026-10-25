@@ -411,7 +411,7 @@ async function toggleRec() {
 $("#recX").onclick = () => { recCancel = true; rec?.stop(); };
 
 /* ---------- Internet P2P: PeerJS cloud (signaling) + WebRTC ---------- */
-let peer = null;
+let peer = null, peerRetry = 0;
 const key = p => "oc-" + String(p).replace(/\D/g, "").slice(-10);   // phone -> peer id (last 10 digits)
 function startPeer() {
   if (!me) return;
@@ -419,13 +419,19 @@ function startPeer() {
   conns = [];
   if (typeof Peer === "undefined") return toast("Internet is needed to go online");
   peer = new Peer(key(me.phone));
-  peer.on("open", () => toast("You are online"));
+  peer.on("open", () => { peerRetry = 0; toast("You are online"); });
   peer.on("connection", wirePeer);
   peer.on("disconnected", () => { try { peer.reconnect(); } catch { } });
   peer.on("error", e => {
-    if (e.type === "unavailable-id") toast("This number is already online on another device or tab");
-    else if (e.type === "peer-unavailable") toast("Friend is offline or the number is wrong");
-    else if (e.type === "network" || e.type === "server-error") toast("No internet connection");
+    const t = e.type;
+    if (t === "unavailable-id") {                      // old session may still be held by the server for a few seconds
+      if (peerRetry++ < 5) { toast("Reconnecting your number..."); setTimeout(startPeer, 4000); }
+      else toast("This number is already online on another device or tab");
+    }
+    else if (t === "peer-unavailable") toast("Friend is offline or the number is wrong");
+    else if (["network", "server-error", "socket-error", "socket-closed"].includes(t)) toast("Cannot reach the connection server. Check your internet and try again.");
+    else if (t === "webrtc") toast("Direct connection failed. Try again, or switch WiFi / mobile data.");
+    else toast("Connection error: " + t);
   });
 }
 addEventListener("online", () => { if (peer && peer.disconnected) try { peer.reconnect(); } catch { } });
@@ -436,7 +442,8 @@ function connectTo(phone) {
   if (id === key(me.phone)) return toast("That is your own number");
   if (conns.some(c => c.conn.peer === id && c.conn.open)) return toast("Already connected");
   toast("Connecting...");
-  wirePeer(peer.connect(id, { reliable: true, serialization: "json" }));
+  const cn = peer.connect(id, { reliable: true, serialization: "json" }); wirePeer(cn);
+  setTimeout(() => { if (!cn.open) toast("Still not connected. Friend may be offline or on a strict network. Try again."); }, 15000);
 }
 /* Wrap a PeerJS connection so the chat code can send/receive framed data */
 function wirePeer(conn) {
@@ -449,7 +456,7 @@ function wirePeer(conn) {
     if (buf[f.m].length === f.n) { const t = buf[f.m].sort((a, b) => a.i - b.i).map(x => x.d).join(""); delete buf[f.m]; onData(c, JSON.parse(t)); }
   });
   const gone = () => { conns = conns.filter(k => k !== c); header(); render(); };
-  conn.on("close", gone); conn.on("error", gone);
+  conn.on("close", gone); conn.on("error", () => { toast("Could not connect to your friend. Ask them to open the app and try again."); gone(); });
 }
 /* Send any object, split into 12 KB frames */
 async function sendRaw(c, obj) {
