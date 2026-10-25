@@ -5,9 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#128C7E">
 <link rel="manifest" href="manifest.json">
+<script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>OfflineConnect - Chat Without Internet</title>
+<title>ConnectChat - Chat with Friends</title>
 <style>
 /* ---------- Theme tokens (light / dark) ---------- */
 :root{--g:#25D366;--bar:#128C7E;--bg:#fff;--bg2:#f0f2f5;--tx:#111b21;--tx2:#667781;--out:#d9fdd3;--in:#fff;--chat:#efeae2;--line:#e9edef;--tick:#53bdeb;
@@ -112,7 +113,7 @@ input,textarea{font:inherit;color:var(--tx)}
 <symbol id="clip" viewBox="0 0 24 24"><path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5a2.5 2.5 0 015 0v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5a2.5 2.5 0 005 0V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/></symbol>
 <symbol id="img" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></symbol>
 <symbol id="emoji" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.48 2 12s4.47 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-10c.83 0 1.5-.67 1.5-1.5S16.33 7 15.5 7 14 7.67 14 8.5s.67 1.5 1.5 1.5zm-7 0C9.33 10 10 9.33 10 8.5S9.33 7 8.5 7 7 7.67 7 8.5 7.67 10 8.5 10zm3.5 7.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></symbol>
-<symbol id="bt" viewBox="0 0 24 24"><path d="M17.71 7.71L12 2h-1v7.59L6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 11 14.41V22h1l5.71-5.71-4.3-4.29 4.3-4.29zM13 5.83l1.88 1.88L13 9.59V5.83zm1.88 10.46L13 18.17v-3.76l1.88 1.88z"/></symbol>
+<symbol id="add" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></symbol>
 <symbol id="x" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></symbol>
 <symbol id="tick" viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></symbol>
 <symbol id="tick2" viewBox="0 0 24 24"><path d="M18 7l-1.41-1.41-6.34 6.34 1.41 1.41L18 7zm4.24-1.41L11.66 16.17 7.48 12l-1.41 1.41L11.66 19l12-12-1.42-1.41zM.41 13.41L6 19l1.41-1.41L1.83 12 .41 13.41z"/></symbol>
@@ -123,26 +124,26 @@ input,textarea{font:inherit;color:var(--tx)}
 <!-- ============ ONBOARDING ============ -->
 <section id="onb" class="screen">
   <div class="box">
-    <h2>Welcome to OfflineConnect</h2>
-    <p class="s">Chat with people nearby. No internet, no SIM, no data.</p>
+    <h2>Welcome to ConnectChat</h2>
+    <p class="s">Chat with friends using their phone number. Your number is your ID.</p>
     <div class="pic" id="pic"><svg class="i" style="width:48px;height:48px"><use href="#cam"/></svg><span class="cam"><svg class="i" style="width:18px;height:18px"><use href="#cam"/></svg></span></div>
     <input type="file" id="picIn" accept="image/*" hidden>
     <label class="fld"><span>Phone number</span><input id="fPhone" type="tel" placeholder="+92 300 1234567"></label>
     <label class="fld"><span>Your name</span><input id="fName" maxlength="30" placeholder="Name"></label>
-    <label class="fld"><span>Bio</span><input id="fBio" maxlength="80" placeholder="Hey there! I am using OfflineConnect"></label>
+    <label class="fld"><span>Bio</span><input id="fBio" maxlength="80" placeholder="Hey there! I am using ConnectChat"></label>
     <button class="btn" id="fGo">Save and continue</button>
   </div>
 </section>
 
 <!-- ============ HOME ============ -->
 <section id="home" class="screen">
-  <div class="bar"><h1>OfflineConnect</h1>
+  <div class="bar"><h1>ConnectChat</h1>
     <button class="ib" id="bSearch" aria-label="Search"><svg class="i"><use href="#search"/></svg></button>
     <button class="ib" id="bMenu" aria-label="Menu"><svg class="i"><use href="#more"/></svg></button></div>
   <div id="sb"><input id="q" placeholder="Search chats"></div>
-  <div class="tabs"><button data-t="chats" class="on">Chats</button><button data-t="groups">Groups</button><button data-t="nearby">Nearby Users</button></div>
+  <div class="tabs"><button data-t="chats" class="on">Chats</button><button data-t="groups">Groups</button><button data-t="nearby">Friends</button></div>
   <div id="list"></div>
-  <button class="fab" id="fab" aria-label="Find nearby friends"><svg class="i"><use href="#bt"/></svg></button>
+  <button class="fab" id="fab" aria-label="Add friend"><svg class="i"><use href="#add"/></svg></button>
 </section>
 
 <!-- ============ CHAT ============ -->
@@ -170,7 +171,7 @@ input,textarea{font:inherit;color:var(--tx)}
 <script>
 "use strict";
 /* =====================================================================
-   OfflineConnect - single-file PWA
+   ConnectChat - single-file PWA
    Storage : IndexedDB (chats + messages), localStorage (profile, theme)
    Transport: WebRTC DataChannel with NO STUN/TURN servers (host candidates
               only), so it works on the same WiFi / hotspot / WiFi Direct
@@ -235,7 +236,6 @@ let conns = [];            // live P2P connections {pc, dc, id, user}
 const nearby = {};         // discovered users {id,name,bio,av}
 const pending = {};        // outgoing offers waiting for an answer
 let btDevices = [];        // Bluetooth devices found by scan
-const bc = "BroadcastChannel" in window ? new BroadcastChannel("offlineconnect") : null;
 
 /* ---------- Theme ---------- */
 function setTheme(t) { if (t) document.documentElement.dataset.theme = t; LS.set("oc_theme", t); }
@@ -256,8 +256,8 @@ $("#picIn").onchange = async e => {
 $("#fGo").onclick = () => {
   const phone = $("#fPhone").value.trim(), name = $("#fName").value.trim();
   if (!phone || !name) return toast("Phone number and name are required");
-  me = { id: me?.id || uid(), phone, name, bio: $("#fBio").value.trim() || "Hey there! I am using OfflineConnect", av: newAv };
-  LS.set("oc_me", me); goHome();
+  me = { id: me?.id || uid(), phone, name, bio: $("#fBio").value.trim() || "Hey there! I am using ConnectChat", av: newAv };
+  LS.set("oc_me", me); goHome(); startPeer();
 };
 
 /* ---------- Home ---------- */
@@ -268,7 +268,7 @@ function setTab(t) {
 }
 $("#bSearch").onclick = () => { const s = $("#sb"); s.style.display = s.style.display === "block" ? "none" : "block"; if (s.style.display === "block") $("#q").focus(); };
 $("#q").oninput = render;
-$("#fab").onclick = () => { setTab("nearby"); scan(); };
+$("#fab").onclick = () => setTab("nearby");
 
 const isOn = id => conns.some(c => c.id === id && c.dc?.readyState === "open");
 function render() {
@@ -287,15 +287,12 @@ function render() {
 function renderNearby(el) {
   const users = Object.values(nearby);
   el.innerHTML = `
-    <div class="info"><b>Please keep Bluetooth and WiFi ON for offline chat.</b><br>Both phones must share the same WiFi, hotspot or WiFi Direct link. No internet is needed.</div>
-    <div style="display:flex;gap:8px;padding:0 12px 6px;flex-wrap:wrap">
-      <button class="btn sm" id="bScan">Find Nearby Friends</button>
-      <button class="btn sm o" id="bCode">Connect with code</button></div>
-    ${users.map(u => `<div class="row">${avatar(u, isOn(u.id) ? "on" : "")}<div class="mid"><div class="t"><b>${esc(u.name)}</b></div><span class="sub">${esc(u.bio || "")}</span></div>
-      ${isOn(u.id) ? `<button class="btn sm" data-chat="${u.id}">Chat</button>` : `<button class="btn sm" data-con="${u.id}">Connect</button>`}</div>`).join("")}
-    ${btDevices.map(d => `<div class="row"><div class="av">${ic("bt")}</div><div class="mid"><b>${esc(d)}</b><span class="sub">Bluetooth device in range. Ask them to open OfflineConnect and share a code.</span></div></div>`).join("")}
-    ${users.length || btDevices.length ? "" : `<div class="empty">Scanning finds people on this network who have OfflineConnect open. If nobody shows up, use <b>Connect with code</b>.</div>`}`;
-  $("#bScan").onclick = scan; $("#bCode").onclick = codeSheet;
+    <div class="info"><b>Internet is needed.</b><br>You and your friend must both open the app. Type their phone number (the one in their profile) and tap Connect.</div>
+    <div style="display:flex;gap:8px;padding:0 12px 10px"><input id="fPh" type="tel" placeholder="Friend's phone number" style="flex:1;min-width:0;border:1px solid var(--line);background:var(--bg2);border-radius:20px;padding:10px 14px;outline:0"><button class="btn sm" id="bAdd">Connect</button></div>
+    ${users.map(u => `<div class="row">${avatar(u, isOn(u.id) ? "on" : "")}<div class="mid"><b>${esc(u.name)}</b><span class="sub">${esc(u.bio || "")}</span></div>
+      ${isOn(u.id) ? `<button class="btn sm" data-chat="${u.id}">Chat</button>` : `<button class="btn sm" data-con="${esc(u.phone || "")}">Connect</button>`}</div>`).join("")}
+    ${users.length ? "" : `<div class="empty">No friends connected yet.</div>`}`;
+  $("#bAdd").onclick = () => connectTo($("#fPh").value);
   el.querySelectorAll("[data-con]").forEach(b => b.onclick = () => connectTo(b.dataset.con));
   el.querySelectorAll("[data-chat]").forEach(b => b.onclick = () => openChat(b.dataset.chat));
 }
@@ -304,20 +301,20 @@ function renderNearby(el) {
 $("#bMenu").onclick = e => {
   e.stopPropagation();
   const dark = getComputedStyle(document.documentElement).colorScheme === "dark";
-  $("#menu").innerHTML = `<button data-a="grp">New group</button><button data-a="code">Connect with code</button><button data-a="theme">${dark ? "Light mode" : "Dark mode"}</button><button data-a="prof">Edit profile</button><button data-a="help">How it works</button>`;
+  $("#menu").innerHTML = `<button data-a="grp">New group</button><button data-a="code">Add friend</button><button data-a="theme">${dark ? "Light mode" : "Dark mode"}</button><button data-a="prof">Edit profile</button><button data-a="help">How it works</button>`;
   $("#menu").classList.add("on");
 };
 document.addEventListener("click", () => $("#menu").classList.remove("on"));
 $("#menu").onclick = e => {
   const a = e.target.dataset.a; if (!a) return;
-  if (a === "grp") newGroup(); if (a === "code") codeSheet(); if (a === "prof") openOnboarding(); if (a === "help") helpSheet();
+  if (a === "grp") newGroup(); if (a === "code") setTab("nearby"); if (a === "prof") openOnboarding(); if (a === "help") helpSheet();
   if (a === "theme") setTheme(getComputedStyle(document.documentElement).colorScheme === "dark" ? "light" : "dark");
 };
 function sheet(html) { const s = $("#sheet"); s.innerHTML = `<div class="in">${html}</div>`; s.classList.add("on"); }
 $("#sheet").onclick = e => { if (e.target.id === "sheet") e.target.classList.remove("on"); };
 const closeSheet = () => $("#sheet").classList.remove("on");
 function helpSheet() {
-  sheet(`<h3>How offline chat works</h3><p class="sub" style="white-space:normal">Messages travel straight between phones using WebRTC, never through the internet. Put both phones on the same WiFi, hotspot or WiFi Direct link, keep Bluetooth on, then connect with a code (or scan if both are on the same device or network page). Messages are saved on your phone and sent when your friend is connected.</p><button class="btn" onclick="closeSheet()">Got it</button>`);
+  sheet(`<h3>How it works</h3><p class="sub" style="white-space:normal">Your phone number is your ID. Open the Friends tab, type your friend's number and tap Connect. Messages go straight from phone to phone. Chats are saved on your phone, and unsent messages go out when your friend comes online.</p><button class="btn" onclick="closeSheet()">Got it</button>`);
 }
 function newGroup() {
   sheet(`<h3>New group</h3><input class="t" id="gName" placeholder="Group name" maxlength="30"><p class="sub" style="white-space:normal">Group messages go to everyone you are connected with.</p><button class="btn" id="gOk">Create group</button>`);
@@ -340,14 +337,15 @@ async function openChat(id) {
   cur = id; c.unread = 0; await dbPut("chats", c);
   const a = $("#cAv"); a.style.backgroundImage = c.av ? `url('${c.av}')` : ""; a.textContent = c.av ? "" : c.name[0].toUpperCase();
   $("#cName").textContent = c.name; show("chat"); header(); drawMsgs();
+  if (!c.group && !isOn(c.id) && c.phone) connectTo(c.phone);
 }
 function header() {
   const c = chats.find(x => x.id === cur); if (!c) return;
-  $("#cSt").textContent = c.group ? `${conns.filter(k => k.dc?.readyState === "open").length} connected` : isOn(c.id) ? "connected (offline)" : "not connected - messages will send later";
+  $("#cSt").textContent = c.group ? `${conns.filter(k => k.dc?.readyState === "open").length} connected` : isOn(c.id) ? "online" : "not connected - messages will send later";
 }
 async function drawMsgs() {
   const list = (await dbMsgs(cur)).sort((a, b) => a.time - b.time), c = chats.find(x => x.id === cur), box = $("#msgs");
-  box.innerHTML = `<div class="sys">Messages are stored on this phone. No internet needed.</div>` + list.map(m => {
+  box.innerHTML = `<div class="sys">Messages are saved on this phone.</div>` + list.map(m => {
     let body = "";
     if (m.kind === "image") body = `<img src="${m.data}" alt="">`;
     else if (m.kind === "audio") body = `<audio controls src="${m.data}"></audio>`;
@@ -375,7 +373,7 @@ async function sendMsg(kind, text, data, name) {
   const m = { id: uid(), chat: cur, me: true, kind, text, data, name, time: Date.now(), st: "sent", from: me.name };
   await saveMsg(m, text || PREV[kind]);
   const targets = c.group ? conns.filter(k => k.dc?.readyState === "open") : conns.filter(k => k.id === cur && k.dc?.readyState === "open");
-  if (!targets.length) toast("Saved. Will send when connected.");
+  if (!targets.length) { toast("Saved. Will send when your friend is online."); if (!c.group && c.phone) connectTo(c.phone); }
   targets.forEach(k => transmit(k, m, c.group ? { id: c.id, name: c.name } : null));
 }
 $("#bSend").onclick = () => {
@@ -412,38 +410,48 @@ async function toggleRec() {
 }
 $("#recX").onclick = () => { recCancel = true; rec?.stop(); };
 
-/* ---------- P2P: WebRTC with no internet servers ---------- */
-const newPC = () => new RTCPeerConnection({ iceServers: [] });
-const enc = d => btoa(unescape(encodeURIComponent(JSON.stringify(d))));
-const dec = s => JSON.parse(decodeURIComponent(escape(atob(s.trim()))));
-/* Wait until all local (LAN) ICE candidates are in the SDP, so one code is enough */
-const iceDone = pc => new Promise(r => {
-  if (pc.iceGatheringState === "complete") return r();
-  pc.onicegatheringstatechange = () => pc.iceGatheringState === "complete" && r();
-  setTimeout(r, 2500);
-});
-async function makeOffer() {
-  const pc = newPC(), c = { pc, dc: pc.createDataChannel("oc") };
-  wire(c); await pc.setLocalDescription(await pc.createOffer()); await iceDone(pc);
-  return { c, code: enc(pc.localDescription) };
+/* ---------- Internet P2P: PeerJS cloud (signaling) + WebRTC ---------- */
+let peer = null;
+const key = p => "oc-" + String(p).replace(/\D/g, "").slice(-10);   // phone -> peer id (last 10 digits)
+function startPeer() {
+  if (!me) return;
+  try { peer?.destroy(); } catch { }
+  conns = [];
+  if (typeof Peer === "undefined") return toast("Internet is needed to go online");
+  peer = new Peer(key(me.phone));
+  peer.on("open", () => toast("You are online"));
+  peer.on("connection", wirePeer);
+  peer.on("disconnected", () => { try { peer.reconnect(); } catch { } });
+  peer.on("error", e => {
+    if (e.type === "unavailable-id") toast("This number is already online on another device or tab");
+    else if (e.type === "peer-unavailable") toast("Friend is offline or the number is wrong");
+    else if (e.type === "network" || e.type === "server-error") toast("No internet connection");
+  });
 }
-async function takeOffer(code) {
-  const pc = newPC(), c = { pc };
-  pc.ondatachannel = e => { c.dc = e.channel; wire(c); };
-  await pc.setRemoteDescription(dec(code)); await pc.setLocalDescription(await pc.createAnswer()); await iceDone(pc);
-  return { c, code: enc(pc.localDescription) };
+addEventListener("online", () => { if (peer && peer.disconnected) try { peer.reconnect(); } catch { } });
+function connectTo(phone) {
+  const id = key(phone);
+  if (id.length < 6) return toast("Enter a valid phone number");
+  if (!peer || !peer.open) return toast("Not online yet. Check your internet.");
+  if (id === key(me.phone)) return toast("That is your own number");
+  if (conns.some(c => c.conn.peer === id && c.conn.open)) return toast("Already connected");
+  toast("Connecting...");
+  wirePeer(peer.connect(id, { reliable: true, serialization: "json" }));
 }
-/* Attach handlers to a connection's data channel */
-function wire(c) {
+/* Wrap a PeerJS connection so the chat code can send/receive framed data */
+function wirePeer(conn) {
+  const c = { conn, dc: { get readyState() { return conn.open ? "open" : "closed"; }, get bufferedAmount() { return conn.dataChannel ? conn.dataChannel.bufferedAmount : 0; }, send: s => conn.send(s) } };
   conns.push(c); const buf = {};
-  c.pc.onconnectionstatechange = () => { if (["failed", "closed", "disconnected"].includes(c.pc.connectionState)) { conns = conns.filter(k => k !== c); header(); render(); } };
-  c.dc.onopen = () => sendRaw(c, { t: "hello", id: me.id, name: me.name, bio: me.bio, av: me.av });
-  c.dc.onmessage = e => {                       // reassemble framed chunks
-    const f = JSON.parse(e.data); (buf[f.m] ||= []).push(f);
-    if (buf[f.m].length === f.n) { const s = buf[f.m].sort((a, b) => a.i - b.i).map(x => x.d).join(""); delete buf[f.m]; onData(c, JSON.parse(s)); }
-  };
+  const hello = () => sendRaw(c, { t: "hello", id: me.id, phone: me.phone, name: me.name, bio: me.bio, av: me.av });
+  conn.on("open", hello); if (conn.open) hello();
+  conn.on("data", s => {                               // reassemble framed chunks
+    const f = JSON.parse(s); (buf[f.m] ||= []).push(f);
+    if (buf[f.m].length === f.n) { const t = buf[f.m].sort((a, b) => a.i - b.i).map(x => x.d).join(""); delete buf[f.m]; onData(c, JSON.parse(t)); }
+  });
+  const gone = () => { conns = conns.filter(k => k !== c); header(); render(); };
+  conn.on("close", gone); conn.on("error", gone);
 }
-/* Send any object, split into 12 KB frames (DataChannel safe size) */
+/* Send any object, split into 12 KB frames */
 async function sendRaw(c, obj) {
   const s = JSON.stringify(obj), n = Math.ceil(s.length / 12000) || 1, m = uid();
   for (let i = 0; i < n; i++) {
@@ -455,65 +463,22 @@ const transmit = (c, m, g) => sendRaw(c, { t: "msg", id: m.id, kind: m.kind, tex
 
 async function onData(c, d) {
   if (d.t === "hello") {
-    c.id = d.id; nearby[d.id] = { id: d.id, name: d.name, bio: d.bio, av: d.av };
+    c.id = d.id; nearby[d.id] = { id: d.id, name: d.name, bio: d.bio, av: d.av, phone: d.phone };
     let ch = chats.find(x => x.id === d.id);
-    if (!ch) { ch = { id: d.id, name: d.name, bio: d.bio, av: d.av, time: Date.now(), last: "Connected", unread: 0 }; chats.push(ch); }
-    else Object.assign(ch, { name: d.name, bio: d.bio, av: d.av });
+    if (!ch) { ch = { id: d.id, name: d.name, bio: d.bio, av: d.av, phone: d.phone, time: Date.now(), last: "Connected", unread: 0 }; chats.push(ch); }
+    else Object.assign(ch, { name: d.name, bio: d.bio, av: d.av, phone: d.phone });
     await dbPut("chats", ch); toast(`Connected with ${d.name}`);
-    for (const m of (await dbMsgs(d.id)).filter(m => m.me && m.st === "sent")) transmit(c, m, null); // flush queued
+    for (const m of (await dbMsgs(d.id)).filter(m => m.me && m.st === "sent")) transmit(c, m, null); // send queued messages
     header(); render();
   } else if (d.t === "msg") {
     const chatId = d.g ? d.g.id : d.uid;
     if (d.g && !chats.find(x => x.id === chatId)) { const g = { id: chatId, name: d.g.name, group: true, time: Date.now(), unread: 0 }; chats.push(g); await dbPut("chats", g); }
     if (!(await rq(st("msgs").get(d.id)))) await saveMsg({ id: d.id, chat: chatId, me: false, kind: d.kind, text: d.text, data: d.data, name: d.name, time: d.time, from: d.from }, d.text || PREV[d.kind]);
-    sendRaw(c, { t: "ack", id: d.id });          // tell sender: delivered
+    sendRaw(c, { t: "ack", id: d.id });                // tell sender: delivered
     if (document.hidden) try { navigator.vibrate?.(80); } catch { }
   } else if (d.t === "ack") {
     const m = await rq(st("msgs").get(d.id)); if (m) { m.st = "delivered"; await dbPut("msgs", m); if (cur === m.chat) drawMsgs(); }
   }
-}
-
-/* ---------- Discovery ---------- */
-function scan() {
-  toast("Scanning... keep Bluetooth and WiFi ON");
-  bc?.postMessage({ t: "who", id: me.id });                // find other OfflineConnect instances
-  if (navigator.bluetooth?.requestDevice) {                // real Bluetooth scan (needs a tap + permission)
-    navigator.bluetooth.requestDevice({ acceptAllDevices: true }).then(d => {
-      const n = d.name || "Unknown device"; if (!btDevices.includes(n)) btDevices.push(n); render();
-    }).catch(() => { });
-  } else toast("Web Bluetooth is not supported here. Use Connect with code.");
-  render();
-}
-const me2 = () => ({ id: me.id, name: me.name, bio: me.bio, av: me.av });
-if (bc) bc.onmessage = async ({ data: d }) => {
-  if (!me || d.id === me.id && d.t !== "x") return;
-  if (d.t === "who") bc.postMessage({ t: "here", ...me2() });
-  else if (d.t === "here") { nearby[d.id] = { id: d.id, name: d.name, bio: d.bio, av: d.av }; render(); }
-  else if (d.t === "offer" && d.to === me.id) { const r = await takeOffer(d.code); bc.postMessage({ t: "answer", to: d.from, from: me.id, id: "x" + me.id, code: r.code }); }
-  else if (d.t === "answer" && d.to === me.id && pending[d.from]) { await pending[d.from].pc.setRemoteDescription(dec(d.code)); delete pending[d.from]; }
-};
-async function connectTo(id) {
-  if (!bc) return toast("Use Connect with code");
-  toast("Connecting..."); const r = await makeOffer(); pending[id] = r.c;
-  bc.postMessage({ t: "offer", to: id, from: me.id, id: "x" + me.id, code: r.code });
-}
-
-/* ---------- Manual code pairing (works between any two devices) ---------- */
-function codeSheet() {
-  sheet(`<h3>Connect with code</h3>
-    <p class="sub" style="white-space:normal">Both phones on the same WiFi or hotspot. Share codes by any offline way: read them out, QR, Bluetooth file, or a nearby-share app.</p>
-    <b>1. I start</b><br><button class="btn sm" id="mk">Create my code</button>
-    <textarea id="mine" readonly placeholder="Your code appears here"></textarea>
-    <textarea id="theirAns" placeholder="Paste friend's reply code here"></textarea>
-    <button class="btn sm" id="fin">Finish connection</button><hr style="border:0;border-top:1px solid var(--line);margin:16px 0">
-    <b>2. Friend started</b>
-    <textarea id="theirOff" placeholder="Paste friend's code here"></textarea>
-    <button class="btn sm" id="rep">Create reply code</button>
-    <textarea id="reply" readonly placeholder="Send this reply code back"></textarea>`);
-  let mine;
-  $("#mk").onclick = async () => { $("#mine").value = "Preparing..."; mine = await makeOffer(); $("#mine").value = mine.code; $("#mine").select(); try { navigator.clipboard.writeText(mine.code); toast("Code copied"); } catch { } };
-  $("#fin").onclick = async () => { try { await mine.c.pc.setRemoteDescription(dec($("#theirAns").value)); toast("Connecting..."); closeSheet(); } catch { toast("Invalid reply code"); } };
-  $("#rep").onclick = async () => { try { const r = await takeOffer($("#theirOff").value); $("#reply").value = r.code; $("#reply").select(); try { navigator.clipboard.writeText(r.code); toast("Reply copied"); } catch { } } catch { toast("Invalid code"); } };
 }
 
 /* ---------- PWA: manifest (generated) + service worker ---------- */
@@ -522,7 +487,7 @@ function codeSheet() {
     const c = document.createElement("canvas"); c.width = c.height = 512; const x = c.getContext("2d");
     x.fillStyle = "#25D366"; x.fillRect(0, 0, 512, 512); x.fillStyle = "#fff"; x.font = "bold 300px sans-serif"; x.textAlign = "center"; x.textBaseline = "middle"; x.fillText("OC", 256, 270);
     const icon = c.toDataURL("image/png");
-    const mf = { name: "OfflineConnect - Chat Without Internet", short_name: "OfflineConnect", display: "standalone", background_color: "#ffffff", theme_color: "#128C7E", start_url: ".", icons: [{ src: icon, sizes: "512x512", type: "image/png", purpose: "any maskable" }] };
+    const mf = { name: "ConnectChat - Chat with Friends", short_name: "ConnectChat", display: "standalone", background_color: "#ffffff", theme_color: "#128C7E", start_url: ".", icons: [{ src: icon, sizes: "512x512", type: "image/png", purpose: "any maskable" }] };
     const l = document.createElement("link"); l.rel = "manifest"; l.href = URL.createObjectURL(new Blob([JSON.stringify(mf)], { type: "application/manifest+json" })); /* real manifest.json is linked in <head> */
   } catch { }
   /* Needs a real file next to this page, served over HTTPS or localhost.
@@ -539,7 +504,7 @@ function codeSheet() {
 (async function init() {
   me = LS.get("oc_me");
   try { DB = await openDB(); chats = await dbAll("chats"); } catch { toast("Storage unavailable: chats will not be saved"); DB = null; }
-  syncBtn(); me ? goHome() : openOnboarding();
+  syncBtn(); me ? (goHome(), startPeer()) : openOnboarding();
 })();
 </script>
 </body>
